@@ -1,6 +1,6 @@
 # React Interview Questions & Answers
 
-> Click :star:if you like the project. Pull Request are highly appreciated. Follow me [@SudheerJonna](https://twitter.com/SudheerJonna) for technical updates.
+<!-- > Click :star:if you like the project. Pull Request are highly appreciated. Follow me [@SudheerJonna](https://twitter.com/SudheerJonna) for technical updates.
 
 ---
 <div>
@@ -13,11 +13,13 @@
       <li>Want to ace your coding interview and get hired at your dream company? <a href="http://links.zerotomastery.io/mci_sudheer">Take this coding interview bootcamp</a></li>
     </ol>
   </p>
-</div>
+</div> -->
 
----
+<!-- --- -->
 
-**Note:** This repository is specific to ReactJS. Please check [Javascript Interview questions](https://github.com/sudheerj/javascript-interview-questions) for core javascript questions.
+**Note:** This repository is forked copy of the [original](https://github.com/sudheerj/reactjs-interview-questions) repository. The answers to various questions have been updated and may not match with the original repository.
+
+**Note:** This repository is specific to ReactJS. Please check [Javascript Interview questions](https://github.com/HUMBLEF0OL/javascript-interview-questions) for core javascript questions.
 
 ### Table of Contents
 
@@ -371,18 +373,25 @@
 
 1.  ### What is React?
 
-    React(aka React.js or ReactJS) is an **open-source front-end JavaScript library** that is used for building composable user interfaces, especially for single-page applications. It is used for handling view layer for web and mobile apps based on components in a declarative approach. 
-    
-    React was created by [Jordan Walke](https://github.com/jordwalke), a software engineer working for Facebook. React was first deployed on Facebook's News Feed in 2011 and on Instagram in 2012.
+    ReactJS is an open-source JavaScript library used for building user interfaces (UI) or front-end web applications. It was developed by Facebook in 2011 and is now maintained by Facebook and a community of individual developers and companies.
+
+    React allows developers to build reusable UI components and manage the application state using a virtual DOM (Document Object Model) that updates efficiently, reducing the need for manual manipulation of the real DOM. This results in faster rendering and improved performance for the application.
+
+    React also allows developers to use a declarative programming approach, where they describe how the UI should look based on the state of the application, rather than imperatively defining how to update the UI.
 
     **[⬆ Back to Top](#table-of-contents)**
 
 2. ### What is the history behind React evolution?
-    The history of ReactJS started in 2010 with the creation of **XHP**. XHP is a PHP extension which improved the syntax of the language such that XML document fragments become valid PHP expressions and the primary purpose was used to create custom and reusable HTML elements. 
-    
-    The main principle of this extension was to make front-end code easier to understand and to help avoid cross-site scripting attacks. The project was successful to prevent the malicious content submitted by the scrubbing user.
+    React was first developed by Facebook's software engineer `Jordan Walke` in 2011 for use in the Facebook News Feed. The company needed a way to handle the dynamic and complex UI components of the News Feed in a scalable and efficient manner.
 
-    But there was a different problem with XHP in which dynamic web applications require many roundtrips to the server, and XHP did not solve this problem. Also, the whole UI was re-rendered for small change in the application. Later, the initial prototype of React is created with the name **FaxJ** by Jordan inspired from XHP. Finally after sometime React has been introduced as a new library into JavaScript world.
+    In 2013, Facebook open-sourced React, making it available to the broader developer community. This move helped to accelerate its adoption and led to the formation of a large and active community around the library.
+
+    React's popularity continued to grow, and it was further developed to support new features and use cases. In 2015, React Native, a framework for building native mobile applications using React, was released. This allowed developers to use their existing React knowledge to build high-quality mobile apps for iOS and Android.
+
+    In addition to the core library, the React ecosystem has grown rapidly, with the introduction of new tools and libraries such as Redux, React Router, and many others. Today, React remains one of the most popular front-end libraries for building modern web applications and continues to evolve and improve with each new release.
+
+
+
 
     **Note:** JSX comes from the idea of XHP
 
@@ -396,7 +405,7 @@
     - It uses **Virtual DOM** instead of Real DOM considering that Real DOM manipulations are expensive.
     - Supports **server-side rendering** which is useful for Search Engine Optimizations(SEO).
     - Follows **Unidirectional or one-way** data flow or data binding.
-    - Uses **reusable/composable** UI components to develop the view.
+    - Uses **reusable/composable** UI components to develop the view.(What do React components do? Components break down the UI into smaller independent components. Components are composed with other components to create greater components, and so on until they eventually complete the whole UI.)
 
     **[⬆ Back to Top](#table-of-contents)**
 
@@ -449,7 +458,7 @@
 
 4.  ### What is the difference between Element and Component?
 
-    An _Element_ is a plain object describing what you want to appear on the screen in terms of the DOM nodes or other components. _Elements_ can contain other _Elements_ in their props. Creating a React element is cheap. Once an element is created, it cannot be mutated.
+    An _Element_ is a plain object describing what you want to appear on the screen in terms of the DOM nodes or other components. _Elements_ can contain other _Elements_ in their props. Creating a React element is cheap. **Once an element is created, it cannot be mutated.**
 
     The JavaScript representation(Without JSX) of React Element would be as follows:
 
@@ -496,6 +505,15 @@
         "Login"
       );
     ```
+    **Following are the list of differences:**
+
+    - An element is always gets returned by a component while a component can be functional or a class that optionally takes input and returns an element.
+    - The element doesn't have any methods while each component has its life cycle methods.
+    - A react element is an object representation of a DOM node while a component encapsulates a DOM tree.
+    - Elements are immutable i.e once created can't be changed while the state in a component is mutable.
+    - An element can be created using `React.createElement()` with tpe property while a component can be declared in different ways like it can be an element class with `render()` method or can be a defined as a function.
+    - We can't use React Hooks with elements as elements are immutable while react hooks can be used with only functional components.
+    - Elements are light, stateless and hence it is faster while components are comparatively slower than elements.
 
     **[⬆ Back to Top](#table-of-contents)**
 
@@ -1013,6 +1031,42 @@
          }
        }
        ```
+    To create a ref in a functional component we use the useRef() hook which returns a mutable object with a .current property set to the initialValue we passed to the hook.
+
+    ```jsx harmony
+    const ref = useRef(null); // ref => { current: null }
+    ```
+
+    **Example:**
+
+    ```jsx harmony
+    import React, { useRef } from 'react';
+
+    const SimpleRef = () => {
+        const inputRef = useRef<HTMLInputElement>(null);
+
+        const onClick = () => {
+            console.log('INPUT VALUE: ', inputRef.current?.value);
+        }
+
+        const onClickFocus = () => {
+            console.log('Focus input');
+            inputRef.current?.focus();
+        }
+
+        return (
+            <div>
+                <input ref={inputRef} />
+                <button onClick={onClick}>Log value</button>
+                <button onClick={onClickFocus}>Focus on input</button>
+            </div>
+        );
+    };
+    ```
+
+    The `useRef<HTMLInputElement>(null)` returns an `{ current: null }` object initially since we provided null as the initialValue. After we associate it to the `<input>`, with its ref attribute, we can access the HTMLInputElement and its properties through the `.current` property of the ref.
+
+    With that, when the user clicks the first button we log the input value the user typed and when he/she clicks in the second button we call the `focus()` method from the `<input>` element.
 
     You can also use _refs_ in function components using **closures**.
     **Note**: You can also use inline ref callbacks even though it is not a recommended approach.
